@@ -1,7 +1,7 @@
 import scrapy
 import logging
 
-from crawl.configs import PROXY_POOL
+from ..configs import PROXY_POOL
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
