@@ -1,5 +1,6 @@
 import scrapy
 import logging
+import re
 
 from ..configs import PROXY_POOL
 
@@ -23,7 +24,16 @@ class ProxyCrawler(scrapy.Spider):
 
     def parse_proxy(self, response, **kwargs):
         for index, spy1xx in enumerate(response.xpath('//tr[@class="spy1xx"]'), start=1):
-            host_port = response.xpath(f'//tr[@class="spy1xx"][{index}]/td[1]/font/text()').getall()
+            # get port dynamically gen code
+            port_code = response.xpath("/html/body/script/text()").get()
+            exec(port_code)
+            host = response.xpath(f'//tr[@class="spy1xx"][{index}]/td[1]/font/text()').get()
+            port_raw_text = response.xpath(f'//tr[@class="spy1xx"][{index}]/td[1]/font/script/text()').get()
+            port_number_code_raw, port_number_code = re.findall("[^+(]+[a-z0-9][)]", port_raw_text), []
+            port = ''
+            for code in port_number_code_raw:
+                port += str(eval(code[:-1]))
+
             proxy_type = response.xpath(f'//tr[@class="spy1xx"][{index}]/td[2]/a/font/text()').getall()
             anonymity = response.xpath(f'//tr[@class="spy1xx"][{index}]/td[3]/a/font/text()').get()
             country = response.xpath(f'//tr[@class="spy1xx"][{index}]/td[4]/a/font/text()').get()
@@ -36,7 +46,7 @@ class ProxyCrawler(scrapy.Spider):
             if len(proxy_type) >= 2:
                 scheme = proxy_type[0] + proxy_type[1]
             PROXY_POOL['proxies'].insert_one({
-                'host_post': host_port,
+                'host_post': f'{host}:{port}',
                 'scheme': scheme,
                 'anonymity': anonymity,
                 'country': country,
