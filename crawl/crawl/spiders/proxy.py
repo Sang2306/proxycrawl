@@ -3,6 +3,7 @@ import logging
 import re
 
 from ..configs import PROXY_POOL
+from ..utils import check_proxy
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -51,6 +52,7 @@ class ProxyCrawler(scrapy.Spider):
             scheme = proxy_type[0]
             if len(proxy_type) >= 2:
                 scheme = proxy_type[0] + proxy_type[1]
+
             PROXY_POOL['proxies'].insert_one({
                 'host_post': f'{host}:{port}',
                 'scheme': scheme,
@@ -60,7 +62,7 @@ class ProxyCrawler(scrapy.Spider):
                 'latency': latency,
                 'uptime': uptime,
                 'check_date': check_date,
-                'usable': True
+                'valid': check_proxy(host, port)
             })
 
         for index, spy1x in enumerate(response.xpath('//tr[@class="spy1x"]'), start=1):
@@ -96,4 +98,5 @@ class ProxyCrawler(scrapy.Spider):
                 'latency': latency,
                 'uptime': uptime,
                 'check_date': check_date,
+                'valid': check_proxy(host, port)
             })

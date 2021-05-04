@@ -9,4 +9,6 @@ mg_client = MongoClient(
 
 PROXY_API_VENDOR = "http://pubproxy.com/api/proxy"
 
+PROXY_CHECKER = 'https://proxy-checker.net/api/proxy-checker/'
+
 PROXY_POOL = mg_client['proxy-pool']
