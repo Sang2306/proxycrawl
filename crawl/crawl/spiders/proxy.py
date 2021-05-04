@@ -60,6 +60,7 @@ class ProxyCrawler(scrapy.Spider):
                 'latency': latency,
                 'uptime': uptime,
                 'check_date': check_date,
+                'usable': True
             })
 
         for index, spy1x in enumerate(response.xpath('//tr[@class="spy1x"]'), start=1):
