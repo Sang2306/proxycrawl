@@ -1,6 +1,6 @@
 import requests
 
-from crawl.crawl.configs import PROXY_CHECKER
+from ..configs import PROXY_CHECKER
 
 
 def check_proxy(host, port):
