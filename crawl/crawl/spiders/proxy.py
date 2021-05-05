@@ -54,7 +54,7 @@ class ProxyCrawler(scrapy.Spider):
                 scheme = proxy_type[0] + proxy_type[1]
 
             PROXY_POOL['proxies'].insert_one({
-                'host_post': f'{host}:{port}',
+                'host_port': f'{host}:{port}',
                 'scheme': scheme,
                 'anonymity': anonymity,
                 'country': country,
@@ -90,7 +90,7 @@ class ProxyCrawler(scrapy.Spider):
             if len(proxy_type) >= 2:
                 scheme = proxy_type[0] + proxy_type[1]
             PROXY_POOL['proxies'].insert_one({
-                'host_post': f'{host}:{port}',
+                'host_port': f'{host}:{port}',
                 'scheme': scheme,
                 'anonymity': anonymity,
                 'country': country,
