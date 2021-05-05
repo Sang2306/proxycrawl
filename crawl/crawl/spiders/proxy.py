@@ -62,7 +62,6 @@ class ProxyCrawler(scrapy.Spider):
                 'latency': latency,
                 'uptime': uptime,
                 'check_date': check_date,
-                'valid': check_proxy(host, port)
             })
 
         for index, spy1x in enumerate(response.xpath('//tr[@class="spy1x"]'), start=1):
@@ -98,5 +97,4 @@ class ProxyCrawler(scrapy.Spider):
                 'latency': latency,
                 'uptime': uptime,
                 'check_date': check_date,
-                'valid': check_proxy(host, port)
             })
