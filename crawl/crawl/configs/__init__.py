@@ -4,7 +4,7 @@ from pymongo import MongoClient
 DB_HOST = "0.0.0.0"
 
 mg_client = MongoClient(
-    f'mongodb://root:{urllib.parse.quote("root")}@{DB_HOST}:27017/?authMechanism=SCRAM-SHA-256'
+    f'mongodb://root:{urllib.parse.quote("root")}@{DB_HOST}:37017/?authMechanism=SCRAM-SHA-256'
 )
 
 PROXY_API_VENDOR = "http://pubproxy.com/api/proxy"
